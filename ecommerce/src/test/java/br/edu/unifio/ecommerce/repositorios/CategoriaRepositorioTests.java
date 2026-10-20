@@ -7,8 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import br.edu.unifio.ecommerce.entidades.Categoria;
 
@@ -24,5 +25,17 @@ public class CategoriaRepositorioTests {
         Optional<Categoria> categoriaOptional = categoriaRepositorio.findById(Short.parseShort("2"));
 
         assertTrue(categoriaOptional.isPresent());
+
+        Categoria categoria = categoriaOptional.get();
+        assertEquals("Eletrônicos", categoria.getNome());
+        assertEquals("Equipamentos Eletrônicos", categoria.getDescricao());
+    }
+
+    @Test
+    public void deveListarTodasAsCategorias() {
+        List<Categoria> categorias = categoriaRepositorio.findAll();
+
+        assertNotNull(categorias);
+        assertEquals(5, categorias.size());
     }
 }
